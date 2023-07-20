@@ -1,0 +1,306 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能考勤后台管理系统</title>
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico'%}"> <link href="{% static 'css/bootstrapmin14ed.css'%}" rel="stylesheet">
+    <link href="{% static 'css/font-awsomemin93e3.css'%}" rel="stylesheet">
+    <link href="{% static 'css/animatemin.css'%}" rel="stylesheet">
+    <link href="{% static 'css/stylemin8624.css'%}" rel="stylesheet">
+</head>
+
+<body class="gray-bg top-navigation">
+
+    <div id="wrapper">
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom white-bg">
+
+            </div>
+            <div class="wrapper wrapper-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <span class="label label-success pull-right">总</span>
+                                    <h5>总人数</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <h1 class="no-margins">{{ sum_people }}</h1>
+                                    <div class="stat-percent font-bold text-success"><i class="fa fa-bolt"></i>
+                                    </div>
+                                    <small>数据库中人员数</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <span class="label label-info pull-right">日</span>
+                                    <h5>打卡数</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <h1 class="no-margins">{{ sum_day }}</h1>
+                                    <div class="stat-percent font-bold text-info"><i class="fa fa-bolt"></i>
+                                    </div>
+                                    <small>打卡</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <span class="label label-primary pull-right">今天</span>
+                                    <h5>打卡统计</h5>
+                                </div>
+                                <div class="ibox-content">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h1 class="no-margins">{{ sum_day_work }}</h1>
+                                            <div class="font-bold text-navy">出勤打卡人次<i class="fa fa-level-up"></i> <small></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h1 class="no-margins">{{ sum_day_work_off}}</h1>
+                                            <div class="font-bold text-navy">下班打卡人次<i class="fa fa-level-down"></i> <small></small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <span class="label label-primary pull-right">今天</span>
+                                    <h5>考勤情况</h5>
+                                </div>
+                                <div class="ibox-content">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h1 class="no-margins">{{percent_work}}%</h1>
+                                            <div class="font-bold text-navy">出勤率<i class="fa fa-level-up"></i> <small></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h1 class="no-margins">{{ percent_off }}%</h1>
+                                            <div class="font-bold text-navy">下班率<i class="fa fa-level-down"></i> <small></small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-content">
+                                    <div>
+                                        <span class="pull-right text-right">
+                                        <small>今日出勤率：<strong>{{ percent1 }}%</strong></small>
+                                            <br/>
+
+                                        </span>
+                                        <h3 class="font-bold no-margins">
+                                        每月考勤统计
+                                    </h3>
+                                        <small>重庆大学软件学院</small>
+                                    </div>
+
+                                    <div class="m-t-sm">
+
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div>
+                                                    <canvas id="lineChart" height="114"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <ul class="stat-list m-t-lg">
+                                                    <li>
+                                                        <h2 class="no-margins">{{ sum_all }}</h2>
+                                                        <small>总打卡</small>
+                                                        <div class="progress progress-mini">
+                                                            <div class="progress-bar" style="width: 48%;"></div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <h2 class="no-margins ">{{ sum }}</h2>
+                                                        <small>最近一个月打卡</small>
+                                                        <div class="progress progress-mini">
+                                                            <div class="progress-bar" style="width: 60%;"></div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="m-t-md">
+                                        <small class="pull-right">
+                                        <i class="fa fa-clock-o"> </i>
+                                         {{ date }}更新
+                                        </small>
+                                        <small>
+                                        <strong>说明：</strong> 统计时间截止次月1日
+                                    </small>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>员工行为统计</h5>
+                                </div>
+                                {% for date,time_early,time_late in behavior_list %}
+                                    <div class="ibox-content">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <small class="stats-label">日期</small>
+                                            <h4>{{ date }}</h4>
+                                        </div>
+
+                                        <div class="col-xs-4">
+                                            <small class="stats-label">最早出勤时间</small>
+                                            <h4>{{ time_early }}</h4>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <small class="stats-label">最晚出勤时间</small>
+                                            <h4>{{ time_late }}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>今日考勤记录</h5>
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                        <a class="close-link">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="row">
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>姓名</th>
+                                                    <th>日期</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for dic in checkin_dict%}
+                                                    <tr>
+                                                        <td>{{dic.name }}</td>
+                                                        <td>{{ dic.time}}</td>
+                                                        <td><i class="fa fa-check text-navy"></i>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/jquery.min.js'%}"></script>
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <script src="{% static 'js/content.min.js'%}"></script>
+    <script src="{% static 'js/plugins/flot/jquery.flot.js'%}"></script>
+    <script src="{% static 'js/plugins/flot/jquery.flot.tooltip.min.js'%}"></script>
+    <script src="{% static 'js/plugins/flot/jquery.flot.resize.js'%}"></script>
+    <script src="{% static 'js/plugins/chartJs/Chart.min.js'%}"></script>
+    <script src="{% static 'js/plugins/peity/jquery.peity.min.js'%}"></script>
+    <script src="{% static 'js/demo/peity-demo.min.js'%}"></script>
+    <script>
+    $(document).ready(function() {
+        var lineData = {
+            labels: ["一月", "二月", "三月", "四月", "五月", "六月", "七月"],
+            datasets: [
+                {
+                    label: "示例数据",
+                    fillColor: "rgba(220, 220, 220, 0.5)",
+                    strokeColor: "rgba(220, 220, 220, 1)",
+                    pointColor: "rgba(220, 220, 220, 1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220, 220, 220, 1)",
+                    data: {{ tongji2 }}
+                },
+                {
+                    label: "示例数据",
+                    fillColor: "rgba(26, 179, 148, 0.5)",
+                    strokeColor: "rgba(26, 179, 148, 0.7)",
+                    pointColor: "rgba(26, 179, 148, 1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(26, 179, 148, 1)",
+                    data: {{ tongji1 }}
+                }
+            ]
+        };
+
+        var lineOptions = {
+            scaleShowGridLines: true,
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            scaleGridLineWidth: 1,
+            bezierCurve: true,
+            bezierCurveTension: 0.4,
+            pointDot: true,
+            pointDotRadius: 4,
+            pointDotStrokeWidth: 1,
+            pointHitDetectionRadius: 20,
+            datasetStroke: true,
+            datasetStrokeWidth: 2,
+            datasetFill: true,
+            responsive: true
+        };
+
+        var ctx = document.getElementById("lineChart").getContext("2d");
+        var myNewChart = new Chart(ctx).Line(lineData, lineOptions);
+    });
+</script>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+</body>
+<!-- Mirrored from www.zi-han.net/theme/hplus/index_v5.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:52 GMT -->
+</html>
